@@ -16,9 +16,9 @@ module Api
       def create
 				book = Book.new(book_params)
 				if book.save
-					render json: {status: 'SUCCESS', data:book},status: :ok
+					render json: {status: 'SUCCESS', data: book},status: :ok
 				else
-					render json: {status: 'ERROR', data:book.errors},status: :unprocessable_entity
+					render json: {status: 'ERROR', data: book.errors},status: :unprocessable_entity
 				end
       end
 
@@ -39,7 +39,7 @@ module Api
       
       private
 			def book_params
-				params.permit(:name, :email, :password)
+				params.permit(:title, :category, :author, :description, :background, :user_id, :available)
 			end
       
 		end

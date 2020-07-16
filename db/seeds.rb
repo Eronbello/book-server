@@ -1,7 +1,12 @@
-10.times  do
-	User.create({
-		name: Faker::Name.unique.name,
-    email: Faker::Internet.unique.email,
-    password: Faker::Internet.password
-	})
+puts '=> Cadastro de usuários'
+
+[
+  { name: "Eron Bello", email: "eron.bello@gmail.com", password: "123456"},
+  { name: "Jeam Martins", email: "jeam@gmail.com", password: "123456"},
+  { name: "Raquel Aparecida", email: "raquel@gmail.com", password: "123456"},
+  { name: "Charles Marafao", email: "charles@gmail.com", password: "123456"}
+].each do |user_params|
+  user = User.create(user_params)
 end
+
+puts '=> Cadastro de usuários finalizado'

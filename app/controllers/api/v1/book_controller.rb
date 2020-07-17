@@ -4,7 +4,7 @@ module Api
       before_action :authorize_request
 
       def index
-				books = Book.order('created_at DESC');
+				books = Book.page(params[:page]).order('created_at DESC')
 				render json: { data:books },  status: :ok
       end
       

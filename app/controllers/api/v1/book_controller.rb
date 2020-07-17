@@ -4,7 +4,7 @@ module Api
       before_action :authorize_request
 
       def index
-				books = Book.page(params[:page]).order('created_at DESC')
+				books = Book.page(params[:page]).where(book_params)
 				render json: { data:books },  status: :ok
       end
       
@@ -37,18 +37,6 @@ module Api
 				render json: {status: 'SUCCESS', data:book},status: :ok
       end
 
-      def by_user
-        id = params['user_id']
-        books = Book.where(user_id: id)
-				render json: { data:books },  status: :ok
-      end
-
-      def loans
-        id = params['user_id']
-        books = Book.where(borrowed_by: id)
-				render json: { data:books },  status: :ok
-      end
-      
       def create_loan
         id = params[:id]
         user_id = params[:user_id]

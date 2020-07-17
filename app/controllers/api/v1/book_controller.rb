@@ -36,10 +36,32 @@ module Api
 				book.destroy
 				render json: {status: 'SUCCESS', data:book},status: :ok
       end
+
+      def by_user
+        id = params['user_id']
+        books = Book.where(user_id: id)
+				render json: { data:books },  status: :ok
+      end
+
+      def loans
+        id = params['user_id']
+        books = Book.where(borrowed_by: id)
+				render json: { data:books },  status: :ok
+      end
       
+      def create_loan
+        id = params[:id]
+        user_id = params[:user_id]
+        book = Book.find id
+        if book
+          book.update(borrowed_by: user_id)
+        end
+				render json: { data:book },  status: :ok
+      end
+
       private
 			def book_params
-				params.permit(:title, :category, :author, :description, :background, :user_id, :available)
+				params.permit(:id, :title, :category, :author, :description, :background, :user_id, :available)
 			end
       
 		end

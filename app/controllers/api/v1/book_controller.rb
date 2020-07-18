@@ -49,7 +49,7 @@ module Api
 
       private
 			def book_params
-				params.permit(:id, :title, :category, :author, :description, :background, :user_id, :available)
+				params.permit(:id, :title, :category, :author, :description, :background, :user_id, :available, :borrowed_by)
 			end
       
 		end

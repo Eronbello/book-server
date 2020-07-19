@@ -1,20 +1,26 @@
-default: &default
+defaults: &defaults
   adapter: postgresql
   encoding: unicode
-  host: postgres
-  username: postgres
-  password: postgres
-  pool: 5
+  host:     "ec2-3-216-129-140.compute-1.amazonaws.com"
+  port:     <%= ENV['PG_PORT'] || 5432 %>
+  database: "df4ldviuud21g8"
+  username: "yqmqdnjbmncium"
+  password: "cdfe36c6771a8115ff36a937bb9816bd7050bb2fae0ef7d525bfa69d70fedf18"
 
 development:
-  <<: *default
-  database: myapp_development
-
+  <<: *defaults
+  pool: 5
 
 test:
-  <<: *default
-  database: myapp_test
+  <<: *defaults
+  pool: 5
+  database: <%= ENV['PG_TEST_DATABASE_NAME'] || 'test' %><%= ENV['TEST_ENV_NUMBER'] %>
+  username: <%= ENV['PG_TEST_USERNAME'] || ENV['PG_USER'] %>
+  password: <%= ENV['PG_TEST_PASSWORD'] || ENV['PG_PASSWORD'] %>
+
+staging:
+  <<: *defaults
+  pool: <%= ENV["DB_POOL"] || ENV['MAX_THREADS'] || 5 %>
 
 production:
-  <<: *default
-  database: myapp_production
+  <<: *defaults

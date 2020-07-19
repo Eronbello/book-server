@@ -4,8 +4,9 @@ module Api
       before_action :authorize_request
 
       def index
-        books = Book.page(params[:page]).where(book_params).joins(:category).select("books.* ,categories.title as category_title")
-				render json: { data:books },  status: :ok
+        total = Book.where(book_params).count
+        books = Book.where(book_params).page(params[:page]).joins(:category).select("books.* ,categories.title as category_title")
+				render json: { data:books, total: total },  status: :ok
       end
       
       def show
@@ -37,6 +38,18 @@ module Api
 				render json: {status: 'SUCCESS', data:book},status: :ok
       end
 
+      def availables
+        total = Book.where(book_params).count
+        books = Book.availables.page(params[:page]).where(book_params).joins(:category).select("books.* ,categories.title as category_title")
+        render json: { data:books, total: total },  status: :ok
+      end
+
+      def borroweds
+        total = Book.where(book_params).count
+        books = Book.borroweds.page(params[:page]).where(book_params).joins(:category).select("books.* ,categories.title as category_title")
+        render json: { data:books, total: total },  status: :ok
+      end
+
       def create_loan
         id = params[:id]
         user_id = params[:user_id]
@@ -55,3 +68,5 @@ module Api
 		end
 	end
 end
+
+Book.create({ title: 'Eron', author: 'Teste', description: 'teste', background: '', user_id: 1, category_id: 1})

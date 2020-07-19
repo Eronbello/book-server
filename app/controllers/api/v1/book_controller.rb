@@ -55,6 +55,9 @@ module Api
         user_id = params[:user_id]
         book = Book.find id
         if book
+          if book.borrowed_by
+            render json: { error: "Already borrowed" },  status: :unprocessable_entity
+          end
           book.update(borrowed_by: user_id)
         end
 				render json: { data:book },  status: :ok

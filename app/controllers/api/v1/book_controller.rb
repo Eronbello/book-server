@@ -4,7 +4,7 @@ module Api
       before_action :authorize_request
 
       def index
-				books = Book.page(params[:page]).where(book_params)
+        books = Book.page(params[:page]).where(book_params).joins(:category).select("books.* ,categories.title as category_title")
 				render json: { data:books },  status: :ok
       end
       
@@ -49,7 +49,7 @@ module Api
 
       private
 			def book_params
-				params.permit(:id, :title, :category, :author, :description, :background, :user_id, :available, :borrowed_by)
+				params.permit(:id, :title, :category_id, :author, :description, :background, :user_id, :available, :borrowed_by)
 			end
       
 		end

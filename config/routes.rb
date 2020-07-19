@@ -4,6 +4,7 @@ Rails.application.routes.draw do
       resources :user
       resources :book
       post '/loans', to: 'book#create_loan'
+      get '/categories', to: 'category#index'
   	end
   end
   post '/auth/login', to: 'authentication#login'
